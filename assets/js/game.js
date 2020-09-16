@@ -33,7 +33,13 @@ var fightOrSkip = function(){
     }
 };
 var fight = function(enemy) {
+    //keep track of who goes first
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+    }
     while (enemyHealth > 0 && playerInfo.health > 0) {
+        if (isPlayerTurn) {
         if (fightOrSkip()) {
             //if true, leave fight by breaking loop
             break;
@@ -41,21 +47,41 @@ var fight = function(enemy) {
         // generate random damage value based on player's attack power
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
         enemyHealth = Math.max(0, enemyHealth - damage);
+        console.log(
+            playerInfo.name +
+            " attacked " +
+            enemy.name + 
+            ". " +
+            enemy.name +
+            " now has " +
+            enemyHealth +
+            " health remaining."
+        );
 
         //check enemy's health
-        if (enemy.health <= 0) {
+        if (enemyHealth <= 0) {
             window.alert(enemy.name + " has died! ");
 
             //award player money for winning
-            playerInfo.money = playerInfo.money = 20;
+            playerInfo.money = playerInfo.money + 20;
             break;
         } else {
             window.alert(enemy.name + " still has " + enemyHealth + " health left.");
         }
-        
+        //player gets attacked first
+        } else {
         var damage = randomNumber(enemy.attack-3, enemy.attack)
         playerInfo.health = Math.max(0, playerInfo.health - damage);
-        
+        console.log(
+            enemy.name +
+            " attacked " +
+            playerInfo.name +
+            ". " + 
+            playerInfo.name +
+            " now has " +
+            playerInfo.health + 
+            " health remaining."
+        );
 
         //check player's health
         if (playerInfo.health <= 0) {
@@ -65,6 +91,9 @@ var fight = function(enemy) {
         } else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + "health left.");
         }
+        }
+        //switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
     }
 };
 //function to generate a random numeric value
