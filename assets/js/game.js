@@ -7,7 +7,7 @@
 
 
 var fight = function(enemy) {
-    while (enemy.health > 0 && playerInfo.health > 0) {
+    while (enemyHealth > 0 && playerInfo.health > 0) {
         // ask user in they'd like to fight or run
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose. ");
 
@@ -28,7 +28,7 @@ var fight = function(enemy) {
 
         // generate random damage value based on player's attack power
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-        enemy.health = Math.max(0, enemy.health - damage);
+        enemyHealth = Math.max(0, enemyHealth - damage);
 
         //check enemy's health
         if (enemy.health <= 0) {
@@ -38,7 +38,7 @@ var fight = function(enemy) {
             playerInfo.money = playerInfo.money = 20;
             break;
         } else {
-            window.alert(enemy.name + " still has " + enemy.health + " health left.");
+            window.alert(enemy.name + " still has " + enemyHealth + " health left.");
         }
         
         var damage = randomNumber(enemy.attack-3, enemy.attack)
